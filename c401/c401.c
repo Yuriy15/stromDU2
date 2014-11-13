@@ -77,22 +77,22 @@ int BSTSearch (tBSTNodePtr RootPtr, char K, int *Content)	{
 ** pomocnou funkci.
 **/
 
-   		if (RootPtr!= NULL){  // Pokud mame nejaky strom
-
+   		if (RootPtr== NULL){  // Pokud mame nejaky strom
+            return FALSE;
+   		}
+        else{
             if (RootPtr->Key!=K){  // kdyz to neni hledany klic
                 if (RootPtr->Key > K){  // aktualni Key je vetsi jako hledany
-                    return BSTSearch (RootPtr->Lptr,K,Content) // rekurzivne se zanorime doleva
+                    return BSTSearch (RootPtr->LPtr,K,Content); // rekurzivne se zanorime doleva
                 }
                 else{
-                    BSTSearch (toorPtr->Rptr,K,Content) //Zanoreni se doprava rek.
+                    BSTSearch (RootPtr->RPtr,K,Content); //Zanoreni se doprava rek.
                 }
             }else{
-                *Content=RootPtr->BSTNodeCont; // nalezen a precten
+                *Content=RootPtr->BSTNodeCont; // nalezen a precten obsah
                 return TRUE; //vracim hodnotu true
             }
    		}
-   		else return FALSE; // neni co hledat nad prazdnym stromem
-
 
 }
 
