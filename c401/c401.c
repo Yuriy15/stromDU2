@@ -114,9 +114,23 @@ void BSTInsert (tBSTNodePtr* RootPtr, char K, int Content)	{
 ** pøíklad, na kterém si chceme ukázat eleganci rekurzivního zápisu.
 **/
 
+  if (RootPtr==NULL){ // kdyz je prazdny strom
+    tBSTNodePtr=newRoot;  // udelam novy uzel(vetev)
+    if((newRoot=malloc(sizeof struct (tBSTNode)))==NULL) // alokujemeho
+        return;
+  newRoot->Key= K;  // vlozime klic
+  newRoot->BSTNodeCont=Content; // obsah
+  newRoot->LPtr=NULL; // Strom nema listy
+  newRoot->Rptr=NULL;
+  *RootPtr=newRoot; // a vlozime obsah
 
-
-	 solved = FALSE;		  /* V pøípadì øe¹ení sma¾te tento øádek! */
+  else if(K< (*RootPtr)->Key){  // pokud je Key mensi, zanorujeme se doleva
+    BSTInsert (&((*RootPtr)->LPtr),K,Content); // volam rekurzivne pro vkladani doleva
+  }
+  else if (K> (*RootPtr)->Key){   // K vetsi, zanorujeme se doprava
+    BSTInsert ( &((*RootPtr)->Rptr),K,Content);  // doprava
+  }
+  else (*RootPtr)-> BSTNodeCont=Content; // kdyz uz neni kam se vnorovat, vlozim obsah
 
 }
 
@@ -132,10 +146,21 @@ void ReplaceByRightmost (tBSTNodePtr PtrReplaced, tBSTNodePtr *RootPtr) {
 ** Tato pomocná funkce bude pou¾ita dále. Ne¾ ji zaènete implementovat,
 ** pøeètìte si komentáø k funkci BSTDelete().
 **/
+  tBSTNodePtr pomocnik;  // pomocny ukazatel
+  pomocnik = NULL;
+
+  if((*RootPtr)-> RPtr == NULL){ // kdyz vpravo nic neni
+    PtrReplaced -> BSTNodeCont = (*RootPtr) -> BSTNodeCont; // nahradi se obsah
+    PtrReplaced-> Key = (*RootPtr)-> Key // nahradim i klic
+    pomocnik= *RootPtr; // tady si zalohuji koren
+    *RootPtr= (*RootPtr) -> Lptr; // nahradim novym korenem
+    free(pomocnik) // uvolnim stary koren
+  }
+  else ReplacedByRightmost(PtrReplaced, &((*RootPtr)-> RPtr)); // pokud vpravo porad neco je tak tam jdi
 
 
 
-	 solved = FALSE;		  /* V pøípadì øe¹ení sma¾te tento øádek! */
+
 
 }
 
